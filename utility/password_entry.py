@@ -7,14 +7,16 @@
 import boto3
 import maskpass
 
-def get_identifier():
-    identifier = input('Please enter your identifier name: ')
+
+        
+def get_identifier(id):
+    #identifier = input('Please enter your identifier name: ')
     client = boto3.client('secretsmanager')
     try:
-        response = client.describe_secret(SecretId=identifier)
+        response = client.describe_secret(SecretId=id)
         return 'This identifier already exists'
     except client.exceptions.ResourceNotFoundException as e:
-        return identifier
+        return id
 
     
 
