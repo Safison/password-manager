@@ -3,6 +3,7 @@ from utility.password_list import list_secrets
 import os
 from moto import mock_aws
 import boto3
+import pytest
 
 @pytest.fixture
 def aws_credentials():
@@ -27,6 +28,8 @@ def test_delete_works_for_valid_input():
             SecretString='{"username":"david","password":"EXAMPLE-PASSWORD"}'
             )
         result = delete(client)
+        list_result = client.list_secrets()
+        print(list_result)
         assert result == 'Mock_secret2 has been deleted'
     
     
@@ -47,4 +50,6 @@ def test_delete_works_for_invalid_input():
             SecretString='{"username":"david","password":"EXAMPLE-PASSWORD"}'
             )
         result = delete(client)
+        list_result = client.list_secrets()
+        print(list_result)
         assert result == 'Secret not found'
